@@ -6,9 +6,6 @@ from tkinter import messagebox
 def salir():
     Venta_Proveedores.destroy()
 
-def salirM():
-    abrir_modificar_venta
-    
 
 def dar_de_alta():
     if validar_campos():
@@ -50,7 +47,6 @@ def validar_campos():
     
     return True
 
-# Función para guardar los datos en un archivo JSON
 def guardar_json():
     with open("CatalogodeProductos.json", "w") as file:
         json.dump(lista_productos, file, indent=4)
@@ -59,7 +55,6 @@ precioM_entrada = None
 cantidadS_M_entrada = None
 codigoM_entrada = None
 
-# Función para abrir la ventana de modificación de productos
 def abrir_modificar_venta():
     global precioM_entrada, cantidadS_M_entrada, codigoM_entrada
 
@@ -87,11 +82,7 @@ def abrir_modificar_venta():
 
     boton_M = tk.Button(ventana_modificar, text="Modificar", command=modificar, bg="black", fg="green", font=("Arial", 12, "bold"))
     boton_M.pack(pady=10)
-   
-    boton_M = tk.Button(ventana_modificar, text="Salir", command=salirM, bg="black", fg="green", font=("Arial", 12, "bold"))
-    boton_M.pack(pady=10)
-   
-
+    
 
 def modificar():
     global precioM_entrada, cantidadS_M_entrada, codigoM_entrada
@@ -113,7 +104,6 @@ def modificar():
         else:
             messagebox.showerror("Error", "Los valores modificados deben ser números.")
 
-# Función para eliminar un producto de la lista
 def eliminar():
     seleccionado = marco.curselection()
     if seleccionado:
@@ -132,7 +122,6 @@ def actualizar_lista():
         codigo = producto.get('codigo', 'N/A')
         marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo}")
 
-# Función para cargar los datos desde un archivo JSON
 def cargar_datos_json():
     global lista_productos
     try:
@@ -141,7 +130,6 @@ def cargar_datos_json():
     except FileNotFoundError:
         lista_productos = []
 
-# Función principal para crear la ventana del vendedor
 def Ventana_Productos_Vendedor():
     global marco, lista_productos, Venta_Proveedores, entrada_nombre, entrada_precio, entrada_cantidad, entrada_codigo
 
