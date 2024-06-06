@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import *
 import json
 from tkinter import messagebox
-from Funciones_Botoms import*
 
 def salir():
     Venta_Proveedores.destroy()
