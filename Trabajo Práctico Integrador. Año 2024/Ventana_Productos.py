@@ -41,17 +41,22 @@ def validar_campos():
     if not nombre.isalpha():
         messagebox.showerror("Error", "El nombre no puede contener números.")
         return False
+    if not presentacion.isalpha():
+        messagebox.showerror("Error", "La presentación no puede contener números")
     
     try:
         float(precio)
         float(cantidad)
-        float(codigo)
-        int(fecha)
-    except ValueError:
-        messagebox.showerror("Error", "El precio, la cantidad y el código deben ser números.")
+        if not all(char.isdigit() or char == '/' for char in fecha):
+            messagebox.showerror("Error en Fecha", "La fecha de vencimiento solo puede contener números y '/'.")
+            return False
+        int(fecha.split('/')[2])
+    except ValueError as e:
+        messagebox.showerror("Error", f"El precio y la cantidad deben ser números.")
         return False
-    
-    return True
+    else:
+        return True
+
 
 def guardar_json():
     with open("CatalogodeProductos.json", "w") as file:
@@ -170,7 +175,7 @@ def Ventana_Productos_Vendedor():
     cargar_datos_json()
 
     Venta_Proveedores = tk.Tk()
-    Venta_Proveedores.geometry("1000x605")
+    Venta_Proveedores.geometry("1000x625")
     Venta_Proveedores.title("Sistema de Farmacias")
     Venta_Proveedores.configure(bg="blue")
     
@@ -222,17 +227,23 @@ def Ventana_Productos_Vendedor():
     marco.place(x=200, y=239)
 
     scrollbar = tk.Scrollbar(Venta_Proveedores, orient=tk.VERTICAL)
-    scrollbar.place(x=710, y=239, height=320)
+    scrollbar.place(x=682, y=239, height=320)
     
     marco.config(yscrollcommand=scrollbar.set)
     scrollbar.config(command=marco.yview)
 
+    scrollbar_horizontal = tk.Scrollbar(Venta_Proveedores, orient=tk.HORIZONTAL)
+    marco.config(xscrollcommand=scrollbar_horizontal.set)
+    
+    scrollbar_horizontal.place(x=200, y=559, width=485)
+    scrollbar_horizontal.config(command=marco.xview)
+
     etiqueta_busqueda =  Label(Venta_Proveedores, text="Buscar Producto:", bg="black", fg="red", font=("Arial", 12, "bold"))
-    etiqueta_busqueda.place(x=200, y=570)
+    etiqueta_busqueda.place(x=200, y=590)
     entrada_busqueda = Entry(Venta_Proveedores)
-    entrada_busqueda.place(x=350, y=570)
+    entrada_busqueda.place(x=350, y=590)
     
     boton_buscar = Button(Venta_Proveedores, text="Buscar", command=buscar_producto, bg="black", fg="green", font=("Arial", 12, "bold"))
-    boton_buscar.place(x=510, y=570)
+    boton_buscar.place(x=490, y=590)
 
     actualizar_lista()
