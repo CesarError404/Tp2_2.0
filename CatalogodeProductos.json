@@ -1,10 +1,26 @@
 [
     {
-        "nombre": "Ibuprofeno",
+        "nombre": "manzana",
         "precio": "1000",
         "cantidad": "500",
-        "codigo": "101010",
-        "fecha de vencimiento": "10/10/27",
-        "presentacion": "Tabletas"
+        "codigo": "20"
+    },
+    {
+        "nombre": "Manzana",
+        "precio": "10000",
+        "cantidad": "500",
+        "codigo": "121212"
+    },
+    {
+        "nombre": "Manzana",
+        "precio": "1000",
+        "cantidad": "500",
+        "codigo": "1010"
+    },
+    {
+        "nombre": "asas",
+        "precio": "10000",
+        "cantidad": "100",
+        "codigo": "5050"
     }
 ]
