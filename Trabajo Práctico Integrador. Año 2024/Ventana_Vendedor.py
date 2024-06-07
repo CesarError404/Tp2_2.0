@@ -18,7 +18,13 @@ def cargar_productos_desde_json():
 def actualizar_stock(lista_productos):
     lista_productos.delete(0, tk.END)
     for producto in productos:
-        lista_productos.insert(tk.END, f"{producto['nombre']} - Precio: {producto['precio']} - Cantidad: {producto['cantidad']}")
+        nombre = producto.get('nombre', 'N/A')
+        precio = producto.get('precio', 'N/A')
+        cantidad = producto.get('cantidad', 'N/A')
+        codigo = producto.get('codigo', 'N/A')
+        fecha = producto.get('fecha de vencimiento', 'N/A')
+        presentacion = producto.get('presentacion', 'N/A')
+        lista_productos.insert(tk.END, f"Nombre: {nombre} - Precio: {precio} - Cantidad: {cantidad} - Codigo: {codigo} - Fecha: {fecha} - Presentacion: {presentacion}")
 
 def vender_producto(lista_productos, entrada_cantidad):
     producto_seleccionado = lista_productos.curselection()

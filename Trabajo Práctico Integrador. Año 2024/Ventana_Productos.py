@@ -20,7 +20,7 @@ def dar_de_alta():
             "cantidad": cantidad,
             "codigo": codigo,
             "fecha de vencimiento": fecha,
-            "presentación": presentacion
+            "presentacion": presentacion
         }
         lista_productos.append(producto)
         guardar_json()
@@ -73,7 +73,7 @@ def abrir_modificar_venta():
 
     ventana_modificar = tk.Toplevel(Venta_Proveedores)
     ventana_modificar.title("Modificar Productos")
-    ventana_modificar.geometry("400x300")
+    ventana_modificar.geometry("400x323")
     ventana_modificar.configure(bg="lightblue")
 
     precioM = tk.Label(ventana_modificar, text="Precio:", bg="black", fg="red", font=("Arial", 12, "bold"))
@@ -122,7 +122,7 @@ def modificar():
             producto["cantidad"] = nueva_cantidad
             producto["codigo"] = nuevo_codigo
             producto["fecha de vencimiento"] = nueva_fecha
-            producto["presentación"] = nueva_presentacion
+            producto["presentacion"] = nueva_presentacion
             guardar_json()
             actualizar_lista()
         else:
@@ -145,7 +145,7 @@ def actualizar_lista():
         codigo = producto.get('codigo', 'N/A')
         fecha = producto.get('fecha de vencimiento', 'N/A')
         presentacion = producto.get('presentación', 'N/A')
-        marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha} - Presentación: {presentacion}")
+        marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha} - Presentacion: {presentacion}")
 
 def cargar_datos_json():
     global lista_productos
@@ -166,7 +166,7 @@ def buscar_producto():
         fecha = producto.get('fecha de vencimiento', 'N/A')
         presentacion = producto.get('presentación', 'N/A')
         if busqueda in nombre.lower():
-            marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha}- Presentación: {presentacion}")
+            marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha}- Presentacion: {presentacion}")
 
 
 def Ventana_Productos_Vendedor():
