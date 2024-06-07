@@ -144,7 +144,7 @@ def actualizar_lista():
         cantidad = producto.get('cantidad', 'N/A')
         codigo = producto.get('codigo', 'N/A')
         fecha = producto.get('fecha de vencimiento', 'N/A')
-        presentacion = producto.get('presentación', 'N/A')
+        presentacion = producto.get('presentacion', 'N/A')
         marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha} - Presentacion: {presentacion}")
 
 def cargar_datos_json():

@@ -95,7 +95,7 @@ def login():
             messagebox.showerror("Error", "No hay usuarios empleados registrados.")
 
     messagebox.showerror("Error", "Nombre de usuario o contraseña incorrectos")
-#-----------------------------------------------------------------------------------
+
 def mostrar_login():
     ventana_inicio.withdraw()
     ventana_login.deiconify()

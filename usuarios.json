@@ -5,5 +5,10 @@
             "contrasena": "10"
         }
     ],
-    "empleados": []
+    "empleados": [
+        {
+            "nombre": "Frank",
+            "contrasena": "15"
+        }
+    ]
 }

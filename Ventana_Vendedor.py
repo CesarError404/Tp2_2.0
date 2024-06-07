@@ -57,7 +57,7 @@ def buscar_producto(lista_productos, entrada_busqueda):
         fecha = producto.get('fecha de vencimiento', 'N/A')
         presentacion = producto.get('presentación', 'N/A')
         if busqueda in nombre.lower():
-            lista_productos.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha} - Presentación: {presentacion}")
+            lista_productos.insert(tk.END, f"Nombre: {nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha} - Presentación: {presentacion}")
 
 def ventana_Vendedor():
     global productos
