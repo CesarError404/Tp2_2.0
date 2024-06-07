@@ -6,7 +6,6 @@ from tkinter import messagebox
 def salir():
     Venta_Proveedores.destroy()
 
-
 def dar_de_alta():
     if validar_campos():
         nombre = entrada_nombre.get()
@@ -21,7 +20,7 @@ def dar_de_alta():
             "cantidad": cantidad,
             "codigo": codigo,
             "fecha de vencimiento": fecha,
-            "presentación:": presentacion
+            "presentación": presentacion
         }
         lista_productos.append(producto)
         guardar_json()
@@ -69,7 +68,7 @@ def abrir_modificar_venta():
 
     ventana_modificar = tk.Toplevel(Venta_Proveedores)
     ventana_modificar.title("Modificar Productos")
-    ventana_modificar.geometry("400x210")
+    ventana_modificar.geometry("400x300")
     ventana_modificar.configure(bg="lightblue")
 
     precioM = tk.Label(ventana_modificar, text="Precio:", bg="black", fg="red", font=("Arial", 12, "bold"))
@@ -92,14 +91,13 @@ def abrir_modificar_venta():
     fechaM_entrada = tk.Entry(ventana_modificar)
     fechaM_entrada.pack()
     
-    presentacion_M = tk.Label(ventana_modificar, text="Fecha de Vencimiento:", bg="black", fg="red", font=("Arial", 12, "bold"))
+    presentacion_M = tk.Label(ventana_modificar, text="Presentación:", bg="black", fg="red", font=("Arial", 12, "bold"))
     presentacion_M.pack(pady=5)
     presentacionM_entrada = tk.Entry(ventana_modificar)
     presentacionM_entrada.pack()
     
     boton_M = tk.Button(ventana_modificar, text="Modificar", command=modificar, bg="black", fg="green", font=("Arial", 12, "bold"))
     boton_M.pack(pady=10)
-    
 
 def modificar():
     global precioM_entrada, cantidadS_M_entrada, codigoM_entrada, fechaM_entrada, presentacionM_entrada
@@ -111,10 +109,10 @@ def modificar():
         nuevo_precio = precioM_entrada.get()
         nueva_cantidad = cantidadS_M_entrada.get()
         nuevo_codigo = codigoM_entrada.get()
-        nueva_fecha = fechaM_entrada
-        nueva_presentacion = presentacionM_entrada
+        nueva_fecha = fechaM_entrada.get()
+        nueva_presentacion = presentacionM_entrada.get()
 
-        if nuevo_precio.isdigit() and nueva_cantidad.isdigit() and nuevo_codigo.isdigit() and nueva_fecha():
+        if nuevo_precio.isdigit() and nueva_cantidad.isdigit() and nuevo_codigo.isdigit() and nueva_fecha:
             producto["precio"] = nuevo_precio
             producto["cantidad"] = nueva_cantidad
             producto["codigo"] = nuevo_codigo
@@ -133,7 +131,6 @@ def eliminar():
         guardar_json()
         actualizar_lista()
 
-
 def actualizar_lista():
     marco.delete(0, tk.END)
     for producto in lista_productos:
@@ -143,7 +140,7 @@ def actualizar_lista():
         codigo = producto.get('codigo', 'N/A')
         fecha = producto.get('fecha de vencimiento', 'N/A')
         presentacion = producto.get('presentación', 'N/A')
-        marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha}- Presentación: {presentacion}")
+        marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha} - Presentación: {presentacion}")
 
 def cargar_datos_json():
     global lista_productos
@@ -152,14 +149,28 @@ def cargar_datos_json():
             lista_productos = json.load(file)
     except FileNotFoundError:
         lista_productos = []
+        
+def buscar_producto():
+    busqueda = entrada_busqueda.get().lower()
+    marco.delete(0, tk.END)
+    for producto in lista_productos:
+        nombre = producto.get('nombre', 'N/A')
+        precio = producto.get('precio', 'N/A')
+        cantidad = producto.get('cantidad', 'N/A')
+        codigo = producto.get('codigo', 'N/A')
+        fecha = producto.get('fecha de vencimiento', 'N/A')
+        presentacion = producto.get('presentación', 'N/A')
+        if busqueda in nombre.lower():
+            marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha}- Presentación: {presentacion}")
+
 
 def Ventana_Productos_Vendedor():
-    global marco, lista_productos, Venta_Proveedores, entrada_nombre, entrada_precio, entrada_cantidad, entrada_codigo, entrada_fecha, entrada_presentacion
+    global marco, lista_productos, Venta_Proveedores, entrada_nombre, entrada_precio, entrada_cantidad, entrada_codigo, entrada_fecha, entrada_presentacion, entrada_busqueda
 
     cargar_datos_json()
 
     Venta_Proveedores = tk.Tk()
-    Venta_Proveedores.geometry("1080x570")
+    Venta_Proveedores.geometry("1000x605")
     Venta_Proveedores.title("Sistema de Farmacias")
     Venta_Proveedores.configure(bg="blue")
     
@@ -211,7 +222,17 @@ def Ventana_Productos_Vendedor():
     marco.place(x=200, y=239)
 
     scrollbar = tk.Scrollbar(Venta_Proveedores, orient=tk.VERTICAL)
-    scrollbar.place(x=1080, y=150, height=320)
+    scrollbar.place(x=710, y=239, height=320)
+    
+    marco.config(yscrollcommand=scrollbar.set)
+    scrollbar.config(command=marco.yview)
+
+    etiqueta_busqueda =  Label(Venta_Proveedores, text="Buscar Producto:", bg="black", fg="red", font=("Arial", 12, "bold"))
+    etiqueta_busqueda.place(x=200, y=570)
+    entrada_busqueda = Entry(Venta_Proveedores)
+    entrada_busqueda.place(x=350, y=570)
+    
+    boton_buscar = Button(Venta_Proveedores, text="Buscar", command=buscar_producto, bg="black", fg="green", font=("Arial", 12, "bold"))
+    boton_buscar.place(x=510, y=570)
 
     actualizar_lista()
-
