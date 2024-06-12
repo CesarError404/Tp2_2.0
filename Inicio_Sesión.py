@@ -3,11 +3,8 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import json
 import os
-from Ventana_Productos import Ventana_Productos_Vendedor
-from Ventana_Vendedor import ventana_Vendedor
-
-Farmaceuticos = []
-Empleados = []
+from Gestion_Stock import Ventana_Productos_Vendedor
+from Vendedor import ventana_Vendedor
 
 def cargar_usuarios():
     if os.path.exists("usuarios.json"):
@@ -15,16 +12,12 @@ def cargar_usuarios():
             try:
                 return json.load(file)
             except json.decoder.JSONDecodeError:
-                return {}
+                return {"Farmaceuticos": [], "empleados": []}
     else:
-        return {}
+        return {"Farmaceuticos": [], "empleados": []}
 
-def guardar_usuario(username, password, tipo_usuario):
+def guardar_usuario(username, password, tipo_usuario, ventana_creacion):
     usuarios = cargar_usuarios()
-
-    if username in usuarios:
-        messagebox.showerror("Error", "El nombre de usuario ya existe")
-        return
 
     nuevo_usuario = {
         "nombre": username,
@@ -32,14 +25,15 @@ def guardar_usuario(username, password, tipo_usuario):
     }
 
     if tipo_usuario == "Farmaceutico":
-        Farmaceuticos.append(nuevo_usuario)
+        usuarios["Farmaceuticos"].append(nuevo_usuario)
     elif tipo_usuario == "Empleado":
-        Empleados.append(nuevo_usuario)
+        usuarios["empleados"].append(nuevo_usuario)
 
     with open("usuarios.json", "w") as file:
-        json.dump({"Farmaceuticos": Farmaceuticos, "empleados": Empleados}, file, indent=4)
+        json.dump(usuarios, file, indent=4)
 
     messagebox.showinfo("Éxito", "Usuario creado exitosamente")
+    ventana_creacion.destroy()  # Cerrar la ventana de creación de usuario
 
 def crear_usuario():
     ventana_creacion = tk.Toplevel()
@@ -65,7 +59,7 @@ def crear_usuario():
     tipo_usuario_menu_creacion.pack()
     tipo_usuario_menu_creacion.configure(bg="black", fg="blue", font=("Arial", 12, "bold"))
 
-    crear_usuario_button_creacion = tk.Button(ventana_creacion, text="Crear Usuario", command=lambda: guardar_usuario(username_entry_creacion.get(), password_entry_creacion.get(), tipo_usuario_var_creacion.get()), bg="black", fg="red", font=("Arial", 12, "bold"))
+    crear_usuario_button_creacion = tk.Button(ventana_creacion, text="Crear Usuario", command=lambda: guardar_usuario(username_entry_creacion.get(), password_entry_creacion.get(), tipo_usuario_var_creacion.get(), ventana_creacion), bg="black", fg="red", font=("Arial", 12, "bold"))
     crear_usuario_button_creacion.pack()
 
 def login():
