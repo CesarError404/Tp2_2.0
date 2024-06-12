@@ -25,6 +25,14 @@ def dar_de_alta():
         lista_productos.append(producto)
         guardar_json()
         actualizar_lista()
+        
+        entrada_nombre.delete(0, tk.END)
+        entrada_precio.delete(0, tk.END)
+        entrada_cantidad.delete(0, tk.END)
+        entrada_codigo.delete(0, tk.END)
+        entrada_fecha.delete(0, tk.END)
+        entrada_presentacion.delete(0, tk.END)
+
 
 def validar_campos():
     nombre = entrada_nombre.get()
@@ -43,6 +51,7 @@ def validar_campos():
         return False
     if not presentacion.isalpha():
         messagebox.showerror("Error", "La presentación no puede contener números")
+        return False
     
     try:
         float(precio)
@@ -67,9 +76,10 @@ cantidadS_M_entrada = None
 codigoM_entrada = None
 fechaM_entrada = None
 presentacionM_entrada = None
+ventana_modificar = None
 
 def abrir_modificar_venta():
-    global precioM_entrada, cantidadS_M_entrada, codigoM_entrada, fechaM_entrada, precioM_entrada, presentacionM_entrada
+    global precioM_entrada, cantidadS_M_entrada, codigoM_entrada, fechaM_entrada, precioM_entrada, presentacionM_entrada, ventana_modificar
 
     ventana_modificar = tk.Toplevel(Venta_Proveedores)
     ventana_modificar.title("Modificar Productos")
@@ -101,32 +111,52 @@ def abrir_modificar_venta():
     presentacionM_entrada = tk.Entry(ventana_modificar)
     presentacionM_entrada.pack()
     
-    boton_M = tk.Button(ventana_modificar, text="Modificar", command=modificar, bg="black", fg="green", font=("Arial", 12, "bold"))
+    boton_M = tk.Button(ventana_modificar, text="Modificar", command=modificar_producto, bg="black", fg="green", font=("Arial", 12, "bold"))
     boton_M.pack(pady=10)
 
-def modificar():
-    global precioM_entrada, cantidadS_M_entrada, codigoM_entrada, fechaM_entrada, presentacionM_entrada
+def modificar_producto():
+    global precioM_entrada, cantidadS_M_entrada, codigoM_entrada, fechaM_entrada, presentacionM_entrada, ventana_modificar
 
     seleccionado = marco.curselection()
     if seleccionado:
         indice = seleccionado[0]
         producto = lista_productos[indice]
+
         nuevo_precio = precioM_entrada.get()
         nueva_cantidad = cantidadS_M_entrada.get()
         nuevo_codigo = codigoM_entrada.get()
         nueva_fecha = fechaM_entrada.get()
         nueva_presentacion = presentacionM_entrada.get()
-
-        if nuevo_precio.isdigit() and nueva_cantidad.isdigit() and nuevo_codigo.isdigit() and nueva_fecha:
+        if validar_campos_modificacion(nuevo_precio, nueva_cantidad, nuevo_codigo, nueva_fecha, nueva_presentacion):
             producto["precio"] = nuevo_precio
             producto["cantidad"] = nueva_cantidad
             producto["codigo"] = nuevo_codigo
             producto["fecha de vencimiento"] = nueva_fecha
             producto["presentacion"] = nueva_presentacion
+
             guardar_json()
             actualizar_lista()
-        else:
-            messagebox.showerror("Error", "Los valores modificados deben ser números.")
+            ventana_modificar.destroy()
+           
+def validar_campos_modificacion(precio, cantidad, codigo, fecha, presentacion):
+    if not precio or not cantidad or not codigo or not fecha or not presentacion:
+        messagebox.showerror("Error", "Por favor ingrese todos los campos.")
+        return False
+    if not presentacion.isalpha():
+        messagebox.showerror("Error", "La presentación no puede contener números")
+        return False
+    try:
+        float(precio)
+        float(cantidad)
+        if not all(char.isdigit() or char == '/' for char in fecha):
+            messagebox.showerror("Error en Fecha", "La fecha de vencimiento solo puede contener números y '/'.")
+            return False
+        int(fecha.split('/')[2])
+    except ValueError:
+        messagebox.showerror("Error", "El precio y la cantidad deben ser números válidos.")
+        return False
+
+    return True
 
 def eliminar():
     seleccionado = marco.curselection()
@@ -164,8 +194,8 @@ def buscar_producto():
         cantidad = producto.get('cantidad', 'N/A')
         codigo = producto.get('codigo', 'N/A')
         fecha = producto.get('fecha de vencimiento', 'N/A')
-        presentacion = producto.get('presentación', 'N/A')
-        if busqueda in nombre.lower():
+        presentacion = producto.get('presentacion', 'N/A')
+        if busqueda in nombre.lower() or busqueda in codigo.lower():
             marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha}- Presentacion: {presentacion}")
 
 
@@ -203,7 +233,7 @@ def Ventana_Productos_Vendedor():
     etiqueta_fecha.place(x=200, y=140)
     entrada_fecha = Entry(Venta_Proveedores)
     entrada_fecha.place(x=385, y=140)
-    
+
     etiqueta_presentacion =  Label(Venta_Proveedores, text="Presentación:", bg="black", fg="red", font=("Arial", 12, "bold"))
     etiqueta_presentacion.place(x=200, y=170)
     entrada_presentacion = Entry(Venta_Proveedores)
@@ -245,5 +275,10 @@ def Ventana_Productos_Vendedor():
     
     boton_buscar = Button(Venta_Proveedores, text="Buscar", command=buscar_producto, bg="black", fg="green", font=("Arial", 12, "bold"))
     boton_buscar.place(x=490, y=590)
-
     actualizar_lista()
+
+    # Iniciar el bucle principal de la ventana
+    Venta_Proveedores.mainloop()
+
+# Llamar a la función principal para iniciar la aplicación
+Ventana_Productos_Vendedor()
