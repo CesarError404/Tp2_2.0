@@ -277,8 +277,6 @@ def Ventana_Productos_Vendedor():
     boton_buscar.place(x=490, y=590)
     actualizar_lista()
 
-    # Iniciar el bucle principal de la ventana
     Venta_Proveedores.mainloop()
 
-# Llamar a la función principal para iniciar la aplicación
-Ventana_Productos_Vendedor()
+
