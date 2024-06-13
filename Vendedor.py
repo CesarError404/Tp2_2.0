@@ -66,7 +66,7 @@ def buscar_producto(lista_productos, entrada_busqueda):
         codigo = producto.get('codigo', 'N/A')
         fecha = producto.get('fecha de vencimiento', 'N/A')
         presentacion = producto.get('presentacion', 'N/A')
-        if busqueda in nombre.lower():
+        if busqueda in nombre.lower() or busqueda in codigo.lower():
             lista_productos.insert(tk.END, f"Nombre: {nombre} - Precio: {precio} - Cantidad: {cantidad} - Codigo: {codigo} - Fecha: {fecha} - Presentacion: {presentacion}")
 
 def informe_ventas():
