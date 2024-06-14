@@ -199,7 +199,7 @@ def buscar_producto():
             marco.insert(tk.END, f"{nombre} - Precio: {precio} - Cantidad: {cantidad} - Código: {codigo} - Fecha de Vencimiento: {fecha}- Presentacion: {presentacion}")
 
 
-def Ventana_Productos_Vendedor():
+def Ventana_Productos():
     global marco, lista_productos, Venta_Proveedores, entrada_nombre, entrada_precio, entrada_cantidad, entrada_codigo, entrada_fecha, entrada_presentacion, entrada_busqueda
 
     cargar_datos_json()
@@ -252,7 +252,7 @@ def Ventana_Productos_Vendedor():
     boton_Salir = tk.Button(Venta_Proveedores, text="Salir", command=salir)
     boton_Salir.place(x=50, y=200, width=110, height=30)
     boton_Salir.configure(bg="black", fg="green", font=("Arial", 12, "bold"))
-
+    
     marco = Listbox(Venta_Proveedores, width=80, height=20)
     marco.place(x=200, y=239)
 
@@ -276,9 +276,5 @@ def Ventana_Productos_Vendedor():
     boton_buscar = Button(Venta_Proveedores, text="Buscar", command=buscar_producto, bg="black", fg="green", font=("Arial", 12, "bold"))
     boton_buscar.place(x=490, y=590)
     actualizar_lista()
+   
 
-    # Iniciar el bucle principal de la ventana
-    Venta_Proveedores.mainloop()
-
-# Llamar a la función principal para iniciar la aplicación
-Ventana_Productos_Vendedor()
