@@ -33,7 +33,7 @@ def guardar_usuario(username, password, tipo_usuario, ventana_creacion):
         json.dump(usuarios, file, indent=4)
 
     messagebox.showinfo("Éxito", "Usuario creado exitosamente")
-    ventana_creacion.destroy()  # Cerrar la ventana de creación de usuario
+    ventana_creacion.destroy()  
 
 def crear_usuario():
     ventana_creacion = tk.Toplevel()
@@ -62,7 +62,7 @@ def crear_usuario():
     crear_usuario_button_creacion = tk.Button(ventana_creacion, text="Crear Usuario", command=lambda: guardar_usuario(username_entry_creacion.get(), password_entry_creacion.get(), tipo_usuario_var_creacion.get(), ventana_creacion), bg="black", fg="red", font=("Arial", 12, "bold"))
     crear_usuario_button_creacion.pack()
 
-def login():
+def Inicio_Sesión():
     username = username_entry.get()
     password = password_entry.get()
     tipo_usuario = tipo_usuario_var.get()
@@ -145,7 +145,7 @@ tipo_usuario_menu = tk.OptionMenu(ventana_login, tipo_usuario_var, "Farmaceutico
 tipo_usuario_menu.pack()
 tipo_usuario_menu.configure(bg="black", fg="red", font=("Arial", 12, "bold"))
 
-login_button = tk.Button(ventana_login, text="Iniciar Sesión", command=login, bg="black", fg="blue", font=("Arial", 12, "bold"))
+login_button = tk.Button(ventana_login, text="Iniciar Sesión", command=Inicio_Sesión, bg="black", fg="blue", font=("Arial", 12, "bold"))
 login_button.pack()
 
 registro_button = tk.Button(ventana_login, text="Registrar Usuario", command=crear_usuario, bg="black", fg="blue", font=("Arial", 12, "bold"))

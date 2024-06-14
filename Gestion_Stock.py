@@ -277,4 +277,3 @@ def Ventana_Productos():
     boton_buscar.place(x=490, y=590)
     actualizar_lista()
    
-
